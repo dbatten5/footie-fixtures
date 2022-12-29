@@ -4,6 +4,8 @@ import os.path
 from datetime import datetime
 from datetime import timedelta
 from typing import Any
+from typing import Dict
+from typing import List
 from typing import Optional
 
 from google.auth.transport.requests import Request
@@ -58,8 +60,8 @@ def add_event(
     summary: str,
     description: str,
     start: str,
-    attendees: Optional[list[str]] = None,
-) -> dict[str, Any]:
+    attendees: Optional[List[str]] = None,
+) -> Dict[str, Any]:
     """Add an event to the calendar.
 
     Args:
@@ -93,7 +95,7 @@ def add_event(
         },
     }
 
-    event: dict[str, Any] = (
+    event: Dict[str, Any] = (
         service.events()
         .insert(
             calendarId="primary",
