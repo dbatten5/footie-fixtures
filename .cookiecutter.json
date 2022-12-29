@@ -1,0 +1,14 @@
+{
+  "_output_dir": "/Users/dominicbatten/projects/personal/random",
+  "_template": "gh:cjolowicz/cookiecutter-hypermodern-python",
+  "author": "Dom Batten",
+  "copyright_year": "2022",
+  "development_status": "Development Status :: 4 - Beta",
+  "email": "dominic.batten@googlemail.com",
+  "friendly_name": "Footie Fixtures",
+  "github_user": "dbatten5",
+  "license": "MIT",
+  "package_name": "footie_fixtures",
+  "project_name": "footie-fixtures",
+  "version": "0.1.0"
+}
