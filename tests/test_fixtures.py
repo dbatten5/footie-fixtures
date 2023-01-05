@@ -9,7 +9,7 @@ from tests.conftest import my_vcr
 
 
 class TestGetRounds:
-    """Tests for the `get_rounds` method."""
+    """Tests for the `get_rounds` function."""
 
     @my_vcr.use_cassette("fixtures/get_rounds.yaml")
     def test_success(self) -> None:
@@ -34,7 +34,7 @@ class TestGetRounds:
 
 
 class TestGetFixtures:
-    """Tests for the `get_fixtures` method."""
+    """Tests for the `get_fixtures` function."""
 
     @my_vcr.use_cassette("fixtures/get_fixtures.yaml")
     def test_success(self) -> None:

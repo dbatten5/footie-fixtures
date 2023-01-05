@@ -15,6 +15,8 @@ from googleapiclient.discovery import Resource
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from .errors import NoEventsError
+
 
 _SCOPES = [
     "https://www.googleapis.com/auth/calendar.events",
@@ -109,7 +111,11 @@ def add_event(
 
 
 def delete_footie_events() -> None:
-    """Delete footie fixture events."""
+    """Delete footie fixture events.
+
+    Raises:
+        NoEventsError: when there are no events to delete
+    """
     service = build_service()
 
     events_result = (
@@ -124,12 +130,10 @@ def delete_footie_events() -> None:
     events = events_result.get("items", [])
 
     if not events:
-        print("No upcoming events found")
-        return
+        raise NoEventsError("No events to delete")
 
     for event in events:
         service.events().delete(
             calendarId="primary",
             eventId=event["id"],
         ).execute()
-        print(f"Event {event['id']} deleted")
