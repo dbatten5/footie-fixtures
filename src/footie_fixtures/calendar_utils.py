@@ -13,7 +13,6 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import Resource
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 
 from .errors import NoEventsError
 
@@ -51,11 +50,7 @@ def build_service() -> Resource:
         with open("token.json", "w") as token:
             token.write(creds.to_json())
 
-    try:
-        return build("calendar", "v3", credentials=creds)
-
-    except HttpError as error:
-        print("An error occurred: %s" % error)
+    return build("calendar", "v3", credentials=creds)
 
 
 def add_event(
