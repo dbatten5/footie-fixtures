@@ -25,22 +25,23 @@ google-auth-oauthlib = "^0.8.0"
 [tool.poetry.group.test.dependencies]
 pytest = ">=6.2.5"
 coverage = {extras = ["toml"], version = ">=6.2"}
+vcrpy = "^4.2.1"
 
 [tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
 darglint = ">=1.8.1"
 isort = ">=5.10.1"
-mypy = ">=0.930"
+mypy = "*"
 pep8-naming = ">=0.12.1"
 pre-commit = ">=2.16.0"
 pre-commit-hooks = ">=4.1.0"
 pyupgrade = ">=2.29.1"
-safety = ">=1.10.3"
+safety = "*"
 typeguard = ">=2.13.3"
 myst-parser = {version = ">=0.16.1"}
-black = "^22.12.0"
-types-requests = "^2.28.11.7"
-ruff = "^0.0.209"
+black = "*"
+types-requests = "*"
+ruff = "*"
 
 [tool.poetry.group.docs.dependencies]
 sphinx = ">=4.3.2"
@@ -76,12 +77,14 @@ pretty = true
 show_column_numbers = true
 show_error_codes = true
 show_error_context = true
+disallow_untyped_decorators = false
 
 [[tool.mypy.overrides]]
 module = [
   "google.*",
   "google_auth_oauthlib.*",
   "googleapiclient.*",
+  "vcr.*"
 ]
 ignore_missing_imports = true
 
@@ -128,6 +131,7 @@ convention = 'google'
     'D415',
     'D205',
     'D104',
+    'D100',
 ]
 
 [build-system]

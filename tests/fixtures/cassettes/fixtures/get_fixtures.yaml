@@ -1,0 +1,86 @@
+interactions:
+  - request:
+      body: null
+      headers:
+        Accept:
+          - "*/*"
+        Accept-Encoding:
+          - gzip, deflate
+        Connection:
+          - keep-alive
+        User-Agent:
+          - python-requests/2.28.1
+        x-rapidapi-host:
+          - v3.football.api-sports.io
+        x-rapidapi-key:
+          - 156f570e0d8f02a516fff8588c2e016d
+      method: GET
+      uri: https://v3.football.api-sports.io/fixtures?season=2022&league=2&round=Round+of+16
+    response:
+      body:
+        string: !!binary |
+          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
+      headers:
+        Access-Control-Allow-Credentials:
+          - "True"
+        Access-Control-Allow-Headers:
+          - x-rapidapi-key, x-apisports-key, x-rapidapi-host
+        Access-Control-Allow-Methods:
+          - GET, OPTIONS
+        Access-Control-Allow-Origin:
+          - "*"
+        Connection:
+          - keep-alive
+        Content-Encoding:
+          - gzip
+        Content-Type:
+          - application/json
+        Date:
+          - Thu, 05 Jan 2023 10:00:32 GMT
+        Strict-Transport-Security:
+          - max-age=31536000
+        Transfer-Encoding:
+          - chunked
+        Vary:
+          - Accept-Encoding
+        X-RateLimit-Limit:
+          - "10"
+        X-RateLimit-Remaining:
+          - "9"
+        X-Request-ID:
+          - 6aba0004-5198-4239-928b-137d98eac559
+          - 6aba0004-5198-4239-928b-137d98eac559
+        x-ratelimit-requests-limit:
+          - "100"
+        x-ratelimit-requests-remaining:
+          - "98"
+      status:
+        code: 200
+        message: OK
+version: 1

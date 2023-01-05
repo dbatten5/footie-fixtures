@@ -1,0 +1,62 @@
+interactions:
+  - request:
+      body: null
+      headers:
+        Accept:
+          - "*/*"
+        Accept-Encoding:
+          - gzip, deflate
+        Connection:
+          - keep-alive
+        User-Agent:
+          - python-requests/2.28.1
+        x-rapidapi-host:
+          - v3.football.api-sports.io
+        x-rapidapi-key:
+          - 156f570e0d8f02a516fff8588c2e016d
+      method: GET
+      uri: https://v3.football.api-sports.io/fixtures?season=2023&league=2&round=Round+of+16
+    response:
+      body:
+        string: !!binary |
+          H4sIAAAAAAAAAxyNsQrDMAxEfyVozpCk0CGf0bV0MO3FBFwrSDIUgv89UifdoXd3J2UYrbTtP2sC
+          pZGOJOkLgyitJymScnVimZabfwtSbgjvRrjVj+tH3IG3Yb5THwkiHOnnyxFoK+Zmiua81xyt7yaC
+          6sPzSMaWiqv+hw+uioj2CwAA//8DAID1zlebAAAA
+      headers:
+        Access-Control-Allow-Credentials:
+          - "True"
+        Access-Control-Allow-Headers:
+          - x-rapidapi-key, x-apisports-key, x-rapidapi-host
+        Access-Control-Allow-Methods:
+          - GET, OPTIONS
+        Access-Control-Allow-Origin:
+          - "*"
+        Connection:
+          - keep-alive
+        Content-Encoding:
+          - gzip
+        Content-Type:
+          - application/json
+        Date:
+          - Thu, 05 Jan 2023 10:18:45 GMT
+        Strict-Transport-Security:
+          - max-age=31536000
+        Transfer-Encoding:
+          - chunked
+        Vary:
+          - Accept-Encoding
+        X-RateLimit-Limit:
+          - "10"
+        X-RateLimit-Remaining:
+          - "9"
+        X-Request-ID:
+          - d875ca6b-77e5-435a-99b0-e9f9c6d1fa54
+          - d875ca6b-77e5-435a-99b0-e9f9c6d1fa54
+        x-ratelimit-requests-limit:
+          - "100"
+        x-ratelimit-requests-remaining:
+          - "94"
+      status:
+        code: 200
+        message: OK
+version: 1
