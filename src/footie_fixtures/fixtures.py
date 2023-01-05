@@ -55,6 +55,9 @@ def get_fixtures(
         season: an optional season, defaults to current year
         round: an optional round, otherwise the latest round will be used
 
+    Raises:
+        NoRoundsError: when there are no rounds available for the season
+
     Returns:
         a dict of fixtures keyed by datetime
     """

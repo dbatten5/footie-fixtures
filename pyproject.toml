@@ -40,7 +40,7 @@ safety = "*"
 typeguard = ">=2.13.3"
 myst-parser = {version = ">=0.16.1"}
 black = "*"
-types-requests = "^2.28.11.7"
+types-requests = "*"
 ruff = "*"
 
 [tool.poetry.group.docs.dependencies]
