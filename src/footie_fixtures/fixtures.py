@@ -1,28 +1,65 @@
 """Fixtures."""
 
+import datetime
 from os import getenv
 from typing import Any
 from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Union
 
 import requests
 
 
 FOOTBALL_API_KEY = getenv("FOOTBALL_API_KEY", "")
-LEAGUE_ID = "2"
-SEASON = "2022"
+DEFAULT_LEAGUE_ID = "2"  # Champions League
 HEADERS = {
     "x-rapidapi-host": "v3.football.api-sports.io",
     "x-rapidapi-key": FOOTBALL_API_KEY,
 }
 
 
-def get_fixtures() -> Dict[str, Any]:
+def get_rounds(
+    league_id: Optional[Union[str, int]] = DEFAULT_LEAGUE_ID,
+    season: Optional[Union[str, int]] = None,
+) -> List[str]:
+    """Get a list of the upcoming rounds for a league.
+
+    Args:
+        league_id: an optional league id
+        season: an optional season, defaults to current year
+
+    Returns:
+        a list of rounds
+    """
+    season = season or datetime.date.today().strftime("%Y")
+    payload = {"season": season, "league": DEFAULT_LEAGUE_ID}
+    url = "https://v3.football.api-sports.io/fixtures/rounds"
+    rounds: List[str] = requests.get(url, headers=HEADERS, params=payload).json()[
+        "response"
+    ]
+    return rounds
+
+
+def get_fixtures(
+    league_id: Optional[str] = DEFAULT_LEAGUE_ID,
+    season: Optional[str] = None,
+    round: Optional[str] = None,
+) -> Dict[str, Any]:
     """Get a list of fixtures.
+
+    Args:
+        league_id: an optional league id
+        season: an optional season, defaults to current year
+        round: an optional round, otherwise the latest round will be used
 
     Returns:
         a dict of fixtures keyed by datetime
     """
-    payload = {"season": SEASON, "league": LEAGUE_ID, "round": "Round of 16"}
+    season = season or datetime.date.today().strftime("%Y")
+    round = round or get_rounds(league_id, season)[-1]
+
+    payload = {"season": season, "league": DEFAULT_LEAGUE_ID, "round": round}
     url = "https://v3.football.api-sports.io/fixtures"
     fixtures = requests.get(url, headers=HEADERS, params=payload).json()["response"]
 
