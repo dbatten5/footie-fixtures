@@ -1,4 +1,4 @@
-"""Fixtures."""
+"""Football api."""
 
 import datetime
 from os import getenv
@@ -14,7 +14,6 @@ from .errors import NoRoundsError
 
 
 FOOTBALL_API_KEY = getenv("FOOTBALL_API_KEY", "")
-DEFAULT_LEAGUE_ID = "2"  # Champions League
 HEADERS = {
     "x-rapidapi-host": "v3.football.api-sports.io",
     "x-rapidapi-key": FOOTBALL_API_KEY,
@@ -22,7 +21,7 @@ HEADERS = {
 
 
 def get_rounds(
-    league_id: Optional[Union[str, int]] = DEFAULT_LEAGUE_ID,
+    league_id: Union[str, int],
     season: Optional[Union[str, int]] = None,
 ) -> List[str]:
     """Get a list of the upcoming rounds for a league.
@@ -35,7 +34,7 @@ def get_rounds(
         a list of rounds
     """
     season = season or datetime.date.today().strftime("%Y")
-    payload = {"season": season, "league": DEFAULT_LEAGUE_ID}
+    payload = {"season": season, "league": league_id}
     url = "https://v3.football.api-sports.io/fixtures/rounds"
     rounds: List[str] = requests.get(url, headers=HEADERS, params=payload).json()[
         "response"
@@ -44,7 +43,7 @@ def get_rounds(
 
 
 def get_fixtures(
-    league_id: Optional[str] = DEFAULT_LEAGUE_ID,
+    league_id: Union[str, int],
     season: Optional[str] = None,
     round: Optional[str] = None,
 ) -> Dict[str, Any]:
@@ -68,7 +67,7 @@ def get_fixtures(
             raise NoRoundsError(f"No rounds available for season {season}")
         round = rounds[-1]
 
-    payload = {"season": season, "league": DEFAULT_LEAGUE_ID, "round": round}
+    payload = {"season": season, "league": league_id, "round": round}
     url = "https://v3.football.api-sports.io/fixtures"
     fixtures = requests.get(url, headers=HEADERS, params=payload).json()["response"]
 

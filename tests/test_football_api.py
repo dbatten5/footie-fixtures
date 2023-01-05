@@ -1,10 +1,10 @@
-"""Tests for footie_fixtures.fixtures."""
+"""Tests for footie_fixtures.football_api."""
 
 import pytest
 
 from footie_fixtures.errors import NoRoundsError
-from footie_fixtures.fixtures import get_fixtures
-from footie_fixtures.fixtures import get_rounds
+from footie_fixtures.football_api import get_fixtures
+from footie_fixtures.football_api import get_rounds
 from tests.conftest import my_vcr
 
 
@@ -20,7 +20,7 @@ class TestGetRounds:
     @my_vcr.use_cassette("fixtures/get_rounds_no_params.yaml")
     def test_no_params(self) -> None:
         """Test default params used."""
-        rounds = get_rounds()
+        rounds = get_rounds("2")
         assert len(rounds) == 0
 
     def test_headers(self) -> None:
@@ -49,21 +49,21 @@ class TestGetFixtures:
     def test_no_round(self) -> None:
         """Test default round param used."""
         with my_vcr.use_cassette("fixtures/get_fixtures_no_round.yaml") as cass:
-            fixtures = get_fixtures(season="2022")
+            fixtures = get_fixtures("2", season="2022")
             assert len(cass.requests) == 2
             assert fixtures["league"]["round"] == "Round of 16"
 
     @my_vcr.use_cassette("fixtures/get_fixtures_no_season.yaml")
     def test_no_season(self) -> None:
         """Test default season param used."""
-        fixtures = get_fixtures(round="Round of 16")
+        fixtures = get_fixtures("2", round="Round of 16")
         assert fixtures["league"]["round"] == "Round of 16"
 
     @my_vcr.use_cassette("fixtures/get_fixtures_no_rounds.yaml")
     def test_no_rounds(self) -> None:
         """Test when no round data available."""
         with pytest.raises(NoRoundsError) as exc:
-            get_fixtures()
+            get_fixtures("2")
             assert str(exc.value) == "No rounds available for season 2023"
 
     def test_headers(self) -> None:
