@@ -1,10 +1,10 @@
-"""Tests for footie_fixtures.fixtures."""
+"""Tests for footie_fixtures.football_api."""
 
 import pytest
 
 from footie_fixtures.errors import NoRoundsError
-from footie_fixtures.fixtures import get_fixtures
-from footie_fixtures.fixtures import get_rounds
+from footie_fixtures.football_api import get_fixtures
+from footie_fixtures.football_api import get_rounds
 from tests.conftest import my_vcr
 
 

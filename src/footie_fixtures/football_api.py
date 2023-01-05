@@ -1,4 +1,4 @@
-"""Fixtures."""
+"""Football api."""
 
 import datetime
 from os import getenv
