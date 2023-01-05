@@ -10,6 +10,8 @@ from typing import Union
 
 import requests
 
+from .errors import NoRoundsError
+
 
 FOOTBALL_API_KEY = getenv("FOOTBALL_API_KEY", "")
 DEFAULT_LEAGUE_ID = "2"  # Champions League
@@ -57,7 +59,11 @@ def get_fixtures(
         a dict of fixtures keyed by datetime
     """
     season = season or datetime.date.today().strftime("%Y")
-    round = round or get_rounds(league_id, season)[-1]
+    if not round:
+        rounds = get_rounds(league_id, season)
+        if not rounds:
+            raise NoRoundsError(f"No rounds available for season {season}")
+        round = rounds[-1]
 
     payload = {"season": season, "league": DEFAULT_LEAGUE_ID, "round": round}
     url = "https://v3.football.api-sports.io/fixtures"
@@ -65,10 +71,18 @@ def get_fixtures(
 
     data: Dict[str, Any] = {
         "league": {
-            "name": fixtures[0]["league"]["name"],
-            "round": fixtures[0]["league"]["round"],
+            "name": "",
+            "round": round,
         },
         "fixtures": {},
+    }
+
+    if not fixtures:
+        return data
+
+    data["league"] = {
+        "name": fixtures[0]["league"]["name"],
+        "round": fixtures[0]["league"]["round"],
     }
 
     for fixture in fixtures:
@@ -76,7 +90,7 @@ def get_fixtures(
         home = fixture["teams"]["home"]["name"]
         away = fixture["teams"]["away"]["name"]
         fixture_str = f"{home} vs. {away}"
-        if date in data:
+        if date in data["fixtures"]:
             data["fixtures"][date].append(fixture_str)
         else:
             data["fixtures"][date] = [fixture_str]
