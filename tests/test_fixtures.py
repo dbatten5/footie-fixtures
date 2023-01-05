@@ -3,7 +3,6 @@
 import pytest
 
 from footie_fixtures.errors import NoRoundsError
-from footie_fixtures.fixtures import HEADERS
 from footie_fixtures.fixtures import get_fixtures
 from footie_fixtures.fixtures import get_rounds
 from tests.conftest import my_vcr
@@ -29,7 +28,9 @@ class TestGetRounds:
         with my_vcr.use_cassette("fixtures/get_rounds.yaml") as cass:
             get_rounds("2", "2022")
             assert len(cass.requests) == 1
-            assert HEADERS.items() <= cass.requests[0].headers.items()
+            req_headers = cass.requests[0].headers
+            assert "x-rapidapi-key" in req_headers
+            assert req_headers["x-rapidapi-host"] == "v3.football.api-sports.io"
 
 
 class TestGetFixtures:
@@ -70,4 +71,6 @@ class TestGetFixtures:
         with my_vcr.use_cassette("fixtures/get_fixtures.yaml") as cass:
             get_fixtures("2", "2022", "Round of 16")
             assert len(cass.requests) == 1
-            assert HEADERS.items() <= cass.requests[0].headers.items()
+            req_headers = cass.requests[0].headers
+            assert "x-rapidapi-key" in req_headers
+            assert req_headers["x-rapidapi-host"] == "v3.football.api-sports.io"
