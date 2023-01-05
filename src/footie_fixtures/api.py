@@ -17,6 +17,7 @@ def add_fixtures(
     season: Optional[str] = None,
     round: Optional[str] = None,
     invites: Optional[List[str]] = None,
+    dry_run: bool = False,
 ) -> None:
     """Add fixtures to the calendar.
 
@@ -25,6 +26,7 @@ def add_fixtures(
         season: a season, defaults to current year
         round: an optional round, otherwise the latest round will be used
         invites: a list of email address to add to the invite list
+        dry_run: a flag to determine whether the events should be added
 
     Raises:
         NoFixturesError: when there no fixtures to add

@@ -19,7 +19,6 @@ from .errors import NoEventsError
 
 _SCOPES = [
     "https://www.googleapis.com/auth/calendar.events",
-    "https://www.googleapis.com/auth/calendar",
 ]
 
 
