@@ -5,8 +5,7 @@ from typing import Optional
 
 import click
 
-from footie_fixtures import add_fixtures as api_add_fixtures
-from footie_fixtures.api import DEFAULT_LEAGUE_ID
+from footie_fixtures import api
 from footie_fixtures.football_api import get_fixtures
 
 
@@ -29,10 +28,7 @@ def add_fixtures(dry_run: bool, season: str, invites: Optional[List[str]]) -> No
         invites: a list of email invites
     """
     if dry_run:
-        fixtures = get_fixtures(
-            DEFAULT_LEAGUE_ID,
-            season=season,
-        )
+        fixtures = get_fixtures(api.DEFAULT_LEAGUE_ID, season=season)
         click.echo(
             f"dry run enabled - skipped adding {len(fixtures['fixtures'])} events"
         )
@@ -41,7 +37,19 @@ def add_fixtures(dry_run: bool, season: str, invites: Optional[List[str]]) -> No
         )
     else:
         click.echo("adding fixtures")
-        api_add_fixtures(season=season, invites=invites)
+        api.add_fixtures(season=season, invites=invites)
+
+
+@cli.command(name="delete_fixtures")
+@click.option("-s", "--season")
+def delete_fixtures(season: str) -> None:
+    """Delete fixtures.
+
+    Args:
+        season: the season for the fixtures
+    """
+    click.echo("deleting fixtures")
+    api.delete_fixtures()
 
 
 if __name__ == "__main__":

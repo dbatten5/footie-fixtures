@@ -104,6 +104,33 @@ def add_event(
     return event
 
 
+def get_footie_events(
+    after: str | None = None,
+) -> list[dict[str, Any]]:
+    """Get footie fixture events.
+
+    Raises:
+        NoEventsError: when there are no events to delete
+    """
+    service = build_service()
+
+    after = after or datetime.utcnow().isoformat("T") + "Z"
+
+    events_result = (
+        service.events()
+        .list(
+            calendarId="primary",
+            privateExtendedProperty="footie-fixtures=true",
+            timeMin=after,
+        )
+        .execute()
+    )
+
+    events: list[dict[str, Any]] = events_result.get("items", [])
+
+    return events
+
+
 def delete_footie_events() -> None:
     """Delete footie fixture events.
 
@@ -112,16 +139,7 @@ def delete_footie_events() -> None:
     """
     service = build_service()
 
-    events_result = (
-        service.events()
-        .list(
-            calendarId="primary",
-            privateExtendedProperty="footie-fixtures=true",
-        )
-        .execute()
-    )
-
-    events = events_result.get("items", [])
+    events = get_footie_events()
 
     if not events:
         raise NoEventsError("No events to delete")
