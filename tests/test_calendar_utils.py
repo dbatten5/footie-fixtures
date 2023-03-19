@@ -41,7 +41,6 @@ class TestBuildService:
             "token.json",
             [
                 "https://www.googleapis.com/auth/calendar.events",
-                "https://www.googleapis.com/auth/calendar",
             ],
         )
         mock_build.assert_called_once_with("calendar", "v3", credentials=mock_creds)
@@ -69,7 +68,6 @@ class TestBuildService:
             "credentials.json",
             [
                 "https://www.googleapis.com/auth/calendar.events",
-                "https://www.googleapis.com/auth/calendar",
             ],
         )
         mock_flow.run_local_server.assert_called_once_with(port=0)
@@ -151,14 +149,20 @@ class TestAddEvent:
 class TestDeleteFootieEvents:
     """Tests for the `delete_footie_events` function."""
 
+    @patch(f"{MODULE_PATH}.datetime")
     @patch(f"{MODULE_PATH}.build_service")
-    def test_success(self, mock_build_service: MagicMock) -> None:
+    def test_success(
+        self,
+        mock_build_service: MagicMock,
+        mock_datetime: MagicMock,
+    ) -> None:
         """Test success."""
         mock_service = Mock()
         mock_build_service.return_value = mock_service
         mock_service.events.return_value.list.return_value.execute.return_value = {
             "items": [{"id": 1}, {"id": 2}]
         }
+        mock_datetime.utcnow.return_value.isoformat.return_value = "2000-01-01:00:00:00"
 
         delete_footie_events()
 
@@ -166,6 +170,7 @@ class TestDeleteFootieEvents:
         mock_events.list.assert_called_once_with(
             calendarId="primary",
             privateExtendedProperty="footie-fixtures=true",
+            timeMin="2000-01-01:00:00:00Z",
         )
         mock_events.delete.assert_has_calls(
             [

@@ -105,12 +105,14 @@ def add_event(
 
 
 def get_footie_events(
-    after: str | None = None,
-) -> list[dict[str, Any]]:
+    after: Optional[str] = None,
+) -> List[Dict[str, Any]]:
     """Get footie fixture events.
 
-    Raises:
-        NoEventsError: when there are no events to delete
+    Args:
+        after: a datetime string to filter by end date after. RFC3339 timestamp with
+            mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00,
+            2011-06-03T10:00:00Z.
     """
     service = build_service()
 
@@ -126,7 +128,7 @@ def get_footie_events(
         .execute()
     )
 
-    events: list[dict[str, Any]] = events_result.get("items", [])
+    events: List[Dict[str, Any]] = events_result.get("items", [])
 
     return events
 
