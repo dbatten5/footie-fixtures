@@ -52,10 +52,6 @@ def add_fixtures(
         )
 
 
-def delete_fixtures(dry_run: bool = False) -> None:
-    """Delete fixtures to the calendar.
-
-    Args:
-        dry_run: a flag to determine whether the events should be deleted
-    """
+def delete_fixtures() -> None:
+    """Delete fixtures from the calendar."""
     delete_footie_events()
