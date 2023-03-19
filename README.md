@@ -21,13 +21,21 @@
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
 
+CLI application to add upcoming football fixtures to your Google Calendar.
+
+```bash
+footie-fixtures add_fixtures --invites john@mail.com
+```
+
 ## Features
 
-- TODO
+- Add upcoming fixtures from various tournaments, e.g. Champion's League to your
+  Google Calendar
+- Send invites to friends
 
 ## Requirements
 
-- TODO
+- `python >= 3.8`
 
 ## Installation
 
