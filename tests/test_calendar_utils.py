@@ -11,6 +11,7 @@ import pytest
 from footie_fixtures.calendar_utils import add_event
 from footie_fixtures.calendar_utils import build_service
 from footie_fixtures.calendar_utils import delete_footie_events
+from footie_fixtures.calendar_utils import get_footie_events
 from footie_fixtures.errors import NoEventsError
 
 
@@ -192,3 +193,31 @@ class TestDeleteFootieEvents:
 
         with pytest.raises(NoEventsError):
             delete_footie_events()
+
+
+class TestGetFootieEvents:
+    """Tests for the `get_footie_events` method."""
+
+    @patch(f"{MODULE_PATH}.build_service")
+    def test_success(self, mock_build_service: MagicMock) -> None:
+        """Events are returned."""
+        mock_service = Mock()
+        mock_build_service.return_value = mock_service
+        mock_service.events.return_value.list.return_value.execute.return_value = {
+            "items": [{"id": 1}, {"id": 2}]
+        }
+
+        events = get_footie_events()
+
+        assert events == [{"id": 1}, {"id": 2}]
+
+    @patch(f"{MODULE_PATH}.build_service")
+    def test_no_events(self, mock_build_service: MagicMock) -> None:
+        """Empty list is returned."""
+        mock_service = Mock()
+        mock_build_service.return_value = mock_service
+        mock_service.events.return_value.list.return_value.execute.return_value = {}
+
+        events = get_footie_events()
+
+        assert events == []
