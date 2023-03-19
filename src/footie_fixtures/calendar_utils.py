@@ -161,6 +161,7 @@ def update_footie_events(update_body: Dict[str, Any]) -> None:
         return
 
     for event in events:
+        update_body["attendees"] += event["attendees"]
         payload = dict(event, **update_body)
 
         service.events().update(
