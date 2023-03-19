@@ -8,6 +8,7 @@ from typing import Dict
 from typing import List
 from typing import Optional
 
+import click
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -15,6 +16,7 @@ from googleapiclient.discovery import Resource
 from googleapiclient.discovery import build
 
 from .errors import NoEventsError
+from .utils import _dry_run_enabled
 
 
 _SCOPES = [
@@ -134,6 +136,38 @@ def get_footie_events(
     events: List[Dict[str, Any]] = events_result.get("items", [])
 
     return events
+
+
+def update_footie_events(update_body: Dict[str, Any]) -> None:
+    """Update footie fixture events.
+
+    Args:
+        update_body: a dict of properties with which to update the events
+
+    Raises:
+        NoEventsError: when there are no events to update
+    """
+    service = build_service()
+
+    events = get_footie_events()
+
+    if not events:
+        raise NoEventsError("No events to update")
+
+    if _dry_run_enabled():
+        click.echo("dry run enabled")
+        click.echo(f"skipped updating {len(events)} events")
+        click.echo(f"update body: {update_body}")
+        return
+
+    for event in events:
+        payload = dict(event, **update_body)
+
+        service.events().update(
+            calendarId="primary",
+            eventId=event["id"],
+            body=payload,
+        ).execute()
 
 
 def delete_footie_events() -> None:
