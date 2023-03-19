@@ -19,7 +19,6 @@ from .errors import NoEventsError
 
 _SCOPES = [
     "https://www.googleapis.com/auth/calendar.events",
-    "https://www.googleapis.com/auth/calendar",
 ]
 
 
@@ -105,6 +104,38 @@ def add_event(
     return event
 
 
+def get_footie_events(
+    after: Optional[str] = None,
+) -> List[Dict[str, Any]]:
+    """Get footie fixture events.
+
+    Args:
+        after: a datetime string to filter by end date after. RFC3339 timestamp with
+            mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00,
+            2011-06-03T10:00:00Z.
+
+    Returns:
+        a list of calendar events
+    """
+    service = build_service()
+
+    after = after or datetime.utcnow().isoformat("T") + "Z"
+
+    events_result = (
+        service.events()
+        .list(
+            calendarId="primary",
+            privateExtendedProperty="footie-fixtures=true",
+            timeMin=after,
+        )
+        .execute()
+    )
+
+    events: List[Dict[str, Any]] = events_result.get("items", [])
+
+    return events
+
+
 def delete_footie_events() -> None:
     """Delete footie fixture events.
 
@@ -113,16 +144,7 @@ def delete_footie_events() -> None:
     """
     service = build_service()
 
-    events_result = (
-        service.events()
-        .list(
-            calendarId="primary",
-            privateExtendedProperty="footie-fixtures=true",
-        )
-        .execute()
-    )
-
-    events = events_result.get("items", [])
+    events = get_footie_events()
 
     if not events:
         raise NoEventsError("No events to delete")

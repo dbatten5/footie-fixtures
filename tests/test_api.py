@@ -8,6 +8,7 @@ import pytest
 
 from footie_fixtures.api import DEFAULT_LEAGUE_ID
 from footie_fixtures.api import add_fixtures
+from footie_fixtures.api import delete_fixtures
 from footie_fixtures.errors import NoFixturesError
 
 
@@ -63,3 +64,13 @@ class TestAddFixtures:
                 ),
             ]
         )
+
+
+class TestDeleteFixtures:
+    """Tests for the `delete_fixtures` function."""
+
+    @patch(f"{MODULE_PATH}.delete_footie_events")
+    def test_no_fixtures(self, mock_delete_footie_events: MagicMock) -> None:
+        """Correct calendar api method is called."""
+        delete_fixtures()
+        mock_delete_footie_events.assert_called_once()

@@ -29,8 +29,8 @@ footie-fixtures add_fixtures --invites john@mail.com
 
 ## Features
 
-- Add upcoming fixtures from various tournaments, e.g. Champion's League to your
-  Google Calendar
+- Add upcoming fixtures from various tournaments, e.g. The Champion's League, to
+  your Google Calendar
 - Send invites to friends
 
 ## Requirements

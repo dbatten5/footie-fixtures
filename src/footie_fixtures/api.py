@@ -5,6 +5,7 @@ from typing import Optional
 from typing import Union
 
 from .calendar_utils import add_event
+from .calendar_utils import delete_footie_events
 from .errors import NoFixturesError
 from .football_api import get_fixtures
 
@@ -49,3 +50,8 @@ def add_fixtures(
             start=date,
             attendees=invites,
         )
+
+
+def delete_fixtures() -> None:
+    """Delete fixtures from the calendar."""
+    delete_footie_events()

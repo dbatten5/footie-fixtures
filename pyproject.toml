@@ -51,7 +51,7 @@ xdoctest = {extras = ["colors"], version = ">=0.15.10"}
 furo = ">=2021.11.12"
 
 [tool.poetry.scripts]
-footie-fixtures = "footie_fixtures.__main__:main"
+footie-fixtures = "footie_fixtures.__main__:cli"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
@@ -102,7 +102,7 @@ ignore = [
   'D408',
   'D409',
   'D413',
-  'E501'
+  'E501',
 ]
 line-length = 80
 select = [
